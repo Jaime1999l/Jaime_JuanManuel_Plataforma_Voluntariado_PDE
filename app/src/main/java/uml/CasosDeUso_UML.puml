@@ -1,22 +1,71 @@
 @startuml
-'https://plantuml.com/use-case-diagram
 
-:Main Admin: as Admin
-(Use the application) as (Use)
+title Aplicación de Voluntariado Comunitario - Diagrama de Casos de Uso
 
-User -> (Start)
-User --> (Use)
+left to right direction
 
-Admin ---> (Use)
+actor Usuario as U
+actor Administrador as A
+actor Sistema as S
 
-note right of Admin : This is an example.
+rectangle "Aplicación de Voluntariado Comunitario" {
+    usecase UC1 as "Iniciar Sesión"
+    usecase UC2 as "Registrarse"
+    usecase UC3 as "Ver Actividades Disponibles"
+    usecase UC4 as "Inscribirse en Actividad"
+    usecase UC5 as "Cancelar Inscripción"
+    usecase UC6 as "Recomendar Actividades"
+    usecase UC7 as "Crear Actividad"
+    usecase UC8 as "Modificar Actividad"
+    usecase UC9 as "Eliminar Actividad"
+    usecase UC10 as "Ver Usuarios Inscritos"
+    usecase UC11 as "Gestionar Estado de Actividad"
+    usecase UC12 as "Visualizar Ubicación de Actividad"
+    usecase UC13 as "Actualizar Actividades en Tiempo Real"
+    usecase UC14 as "Ver Perfil de Usuario"
+    usecase UC15 as "Cerrar Sesión"
+    usecase UC16 as "Sincronizar Base de Datos"
+    usecase UC17 as "Notificar Actualizaciones"
+    usecase UC18 as "Calcular Distancia"
+}
 
-note right of (Use)
-A note can also
-be on several lines
-end note
+' Usuario interactúa con los casos de uso principales
+U --> UC1 : "Inicia sesión"
+U --> UC2 : "Se registra"
+U --> UC3 : "Consulta actividades"
+U --> UC4 : "Participa en actividad"
+U --> UC5 : "Se da de baja"
+U --> UC6 : "Recibe recomendaciones"
+U --> UC12 : "Consulta ubicación"
+U --> UC14 : "Gestiona su perfil"
+U --> UC15 : "Cierra sesión"
+U --> UC18 : "Obtiene distancias"
 
-note "This note is connected\nto several objects." as N2
-(Start) .. N2
-N2 .. (Use)
+' Administrador interactúa con funciones avanzadas
+A --> UC1 : "Inicia sesión"
+A --> UC7 : "Crea actividad"
+A --> UC8 : "Modifica actividad"
+A --> UC9 : "Elimina actividad"
+A --> UC10 : "Consulta usuarios inscritos"
+A --> UC11 : "Cambia estado de actividad"
+A --> UC14 : "Gestiona su perfil"
+A --> UC15 : "Cierra sesión"
+
+' Sistema realiza operaciones en segundo plano
+S --> UC13 : "Actualiza actividades"
+S --> UC16 : "Sincroniza datos"
+S --> UC17 : "Notifica actualizaciones"
+
+' Relaciones entre casos de uso
+UC3 .> UC12 : <<include>>
+UC4 .> UC13 : <<include>>
+UC6 .> UC3 : <<extend>>
+UC10 .> UC3 : <<extend>>
+UC7 .> UC13 : <<include>>
+UC8 .> UC13 : <<include>>
+UC9 .> UC13 : <<include>>
+UC18 .> UC6 : <<include>>
+UC16 .> UC13 : <<include>>
+UC17 .> UC13 : <<extend>>
+
 @enduml

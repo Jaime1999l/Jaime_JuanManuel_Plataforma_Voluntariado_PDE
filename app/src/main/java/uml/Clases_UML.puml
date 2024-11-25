@@ -1,27 +1,161 @@
 @startuml
-'https://plantuml.com/class-diagram
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
+title Aplicación de Voluntariado Comunitario - Diagrama de Clases
 
-List <|-- AbstractList
-Collection <|-- AbstractCollection
+skinparam classAttributeIconSize 0
+skinparam dpi 150
 
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
+rectangle "Aplicación de Voluntariado Comunitario" {
 
-class ArrayList {
-Object[] elementData
-size()
-}
+    package "Lógica de Usuario" {
+        class Usuario {
+            - String id
+            - String nombre
+            - String correo
+            - String rol  "user | admin"
+            - Ubicacion ubicacionActual
+            - List<ActividadVoluntariado> actividadesInscritas
+            - String idCredenciales
+            + login(correo: String, contraseña: String): boolean
+            + registrarse(): boolean
+            + inscribirseEnActividad(actividad: ActividadVoluntariado): void
+            + cancelarInscripcion(actividad: ActividadVoluntariado): void
+            + obtenerUbicacion(): Ubicacion
+            + calcularDistancia(actividad: ActividadVoluntariado): double
+            + verActividadesRecomendadas(): List<ActividadVoluntariado>
+            + esAdministrador(): boolean
+            + crearActividad(titulo: String, descripcion: String, cupo: int, ubicacion: Ubicacion): void
+            + modificarActividad(actividad: ActividadVoluntariado): void
+            + eliminarActividad(actividad: ActividadVoluntariado): void
+            + verUsuariosInscritos(actividad: ActividadVoluntariado): List<Usuario>
+            + gestionarEstadoActividad(actividad: ActividadVoluntariado, estado: String): void
+        }
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
+        class Credenciales {
+            - String id
+            - String correo
+            - String contraseña
+            + verificarCredenciales(correo: String, contraseña: String): boolean
+        }
+
+        Usuario --> Credenciales : "usa"
+    }
+
+    ' Credenciales
+    package "Seguridad" {
+        class Credenciales {
+            - String id
+            - String correo
+            - String contraseña
+            + verificarCredenciales(correo: String, contraseña: String): boolean
+        }
+
+        Usuario --> Credenciales : "usa"
+    }
+
+    package "Actividades y Ubicación" {
+        class ActividadVoluntariado {
+            - String id
+            - String titulo
+            - String descripcion
+            - Ubicacion ubicacion
+            - String estado
+            - int cupoTotal
+            - int cupoDisponible
+            - List<Usuario> usuariosInscritos
+            + registrarUsuario(usuario: Usuario): void
+            + eliminarUsuario(usuario: Usuario): void
+            + esCompleta(): boolean
+            + actualizarCupo(nuevoCupo: int): void
+            + obtenerUsuariosInscritos(): List<Usuario>
+            + cambiarEstado(nuevoEstado: String): void
+            + calcularDistanciaDesdeUsuario(usuario: Usuario): double
+        }
+
+        class Ubicacion {
+            - double latitud
+            - double longitud
+            - String direccion
+            - String ciudad
+            - String codigoPostal
+            + calcularDistancia(otraUbicacion: Ubicacion): double
+            + obtenerDireccionCompleta(): String
+            + esCercana(otraUbicacion: Ubicacion, radio: double): boolean
+        }
+
+        ActividadVoluntariado --> Usuario : "usuarios inscritos"
+        ActividadVoluntariado --> Ubicacion : "se realiza en"
+    }
+
+    ' Servicios del Sistema
+    package "Servicios del Sistema" {
+        class FirebaseHandler {
+            + guardarUsuario(usuario: Usuario): void
+            + obtenerUsuario(correo: String): Usuario
+            + eliminarUsuario(correo: String): void
+            + guardarActividad(actividad: ActividadVoluntariado): void
+            + obtenerActividades(): List<ActividadVoluntariado>
+            + eliminarActividad(actividad: ActividadVoluntariado): void
+            + actualizarActividad(actividad: ActividadVoluntariado): void
+            + obtenerUsuariosPorActividad(idActividad: String): List<Usuario>
+        }
+
+        Usuario --> FirebaseHandler : "interactúa con Firebase"
+        Usuario --> FirebaseHandler : "gestiona datos (ROL: Administrador)"
+    }
+
+    ' Activities y Fragments
+    package "Activities y Fragments" {
+        class LoginActivity {
+            + autenticarUsuario(correo: String, contraseña: String): boolean
+        }
+
+        class RegisterActivity {
+            + registrarUsuario(usuario: Usuario): boolean
+        }
+
+        class MainActivity {
+            + mostrarMenu()
+            + cargarFragment(fragment: Fragment): void
+        }
+
+        class MenuFragment {
+            + navegarA(seccion: String): void
+        }
+
+        class ActivitiesFragment {
+            + mostrarListaActividades(): void
+            + actualizarInscripcion(actividad: ActividadVoluntariado): void
+        }
+
+        class CreateActivity {
+            + crearNuevaActividad(titulo: String, descripcion: String, cupo: int, ubicacion: Ubicacion): void
+        }
+
+        MainActivity --> MenuFragment : "carga"
+        MainActivity --> ActivitiesFragment : "carga"
+        LoginActivity --> Credenciales : "verifica credenciales"
+        RegisterActivity --> Credenciales : "crea credenciales"
+        ActivitiesFragment --> ActividadVoluntariado : "muestra actividades"
+        CreateActivity --> Usuario : "gestiona actividades (ROL: Administrador)"
+    }
+
+    ' Lógica de Recomendaciones y Validaciones
+    package "Recomendaciones y Validaciones" {
+        class RecomendadorActividades {
+            + recomendarPorProximidad(usuario: Usuario): List<ActividadVoluntariado>
+            + ordenarPorCupoDisponible(actividades: List<ActividadVoluntariado>): List<ActividadVoluntariado>
+        }
+
+        class CalculadoraDistancias {
+            + calcularDistancia(lat1: double, lon1: double, lat2: double, lon2: double): double
+            + estaDentroDeRadio(lat1: double, lon1: double, lat2: double, lon2: double, radio: double): boolean
+        }
+
+        Usuario --> RecomendadorActividades : "Consulta"
+        RecomendadorActividades --> ActividadVoluntariado : "Recomienda"
+        RecomendadorActividades --> CalculadoraDistancias : "Usa para cálculos"
+    }
 }
 
 @enduml
