@@ -19,7 +19,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Jaime_Plataforma_Voluntariado_PDE"
+        android:theme="@style/Theme.Jaime_JuanManuel_Plataforma_Voluntariado_PDE"
         android:usesCleartextTraffic="true">
 
         <!-- Configuración de Firebase -->
