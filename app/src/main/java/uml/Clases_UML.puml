@@ -104,8 +104,12 @@ rectangle "Aplicación de Voluntariado Comunitario" {
         Usuario --> FirebaseHandler : "gestiona datos (ROL: Administrador)"
     }
 
-    ' Activities y Fragments
     package "Activities y Fragments" {
+        class SearchActivity {
+            + loadAllActivities(): void
+            + filtrarActivities(query: String): void
+        }
+
         class LoginActivity {
             + autenticarUsuario(correo: String, contraseña: String): boolean
         }
@@ -138,6 +142,7 @@ rectangle "Aplicación de Voluntariado Comunitario" {
         RegisterActivity --> Credenciales : "crea credenciales"
         ActivitiesFragment --> ActividadVoluntariado : "muestra actividades"
         CreateActivity --> Usuario : "gestiona actividades (ROL: Administrador)"
+        MenuFragment --> SearchActivity : "navega a búsqueda"
     }
 
     ' Lógica de Recomendaciones y Validaciones

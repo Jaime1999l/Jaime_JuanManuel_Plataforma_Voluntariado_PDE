@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Jaime_Plataforma_Voluntariado_PDE</string>
+    <string-array name="roles">
+        <item>Usuario</item>
+        <item>Administrador</item>
+    </string-array>
 </resources>

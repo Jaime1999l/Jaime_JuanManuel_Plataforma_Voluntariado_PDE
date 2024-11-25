@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Campo de búsqueda -->
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Buscar actividades"
+        android:inputType="text"
+        android:drawableLeft="@drawable/ic_search"
+        android:padding="8dp"
+        android:background="@drawable/edittext_background"
+        android:layout_marginBottom="16dp"
+        android:elevation="2dp"
+        android:drawablePadding="8dp" />
+
+    <!-- Mensaje de "sin resultados" -->
+    <TextView
+        android:id="@+id/tvNoResults"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:text="No se encontraron actividades"
+        android:textSize="16sp"
+        android:textColor="@android:color/darker_gray"
+        android:visibility="gone" />
+
+    <!-- RecyclerView para mostrar los resultados -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvResults"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="vertical"
+        android:paddingTop="8dp" />
+
+</LinearLayout>

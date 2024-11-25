@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Contenedor para el menú -->
+    <FrameLayout
+        android:id="@+id/containerMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top" />
+
+    <!-- Botón para cerrar sesión -->
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cerrar Sesión"
+        android:textColor="@android:color/white"
+        android:background="@drawable/button_rounded_black"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"/>
+
+    <!-- Contenedor para el contenido principal -->
+    <FrameLayout
+        android:id="@+id/containerContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>
