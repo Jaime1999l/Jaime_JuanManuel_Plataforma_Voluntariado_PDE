@@ -1,5 +1,8 @@
 Link: https://github.com/Jaime1999l/Jaime_Plataforma_Voluntariado_PDE.git
 
+Jaime López Díaz
+Juan Manuel
+
 # Plataforma de Voluntariado
 
 ## Descripción General
