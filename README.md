@@ -58,7 +58,7 @@ Se implementa un sistema de búsqueda y filtrado que permite a los usuarios enco
 
 ## Fragmento de Próximas Oportunidades en la Pantalla de Inicio
 
-La aplicación incluye un fragmento que muestra las próximas oportunidades de voluntariado en la pantalla de inicio del dispositivo. Este fragmento se actualiza periódicamente para reflejar las actividades más recientes y relevantes para el usuario.
+La aplicación incluye un fragmento que muestra las próximas oportunidades de voluntariado en la pantalla de inicio del dispositivo. Este fragmento se actualiza periódicamente para reflejar las actividades más recientes y relevantes para el usuario en función de su ubicación.
 
 ## Sugerencias Basadas en Ubicación
 
